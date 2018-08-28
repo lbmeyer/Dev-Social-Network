@@ -15,10 +15,10 @@ module.exports = passport => {
       // console.log(jwt_payload);
       User.findById(jwt_payload.id)
         .then(user => {
-          if(user) {
+          if (user) {
             return done(null, user);
           }
-          return done(null, false)
+          return done(null, false);
         })
         .catch(err => console.log(err));
     })
