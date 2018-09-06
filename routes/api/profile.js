@@ -279,7 +279,7 @@ router.delete(
   (req, res) => {
     Profile.findOneAndRemove({ user: req.user.id }).then(() => {
       User.findOneAndRemove({ _id: req.user.id }).then(() =>
-        res.json({ sucess: true })
+        res.json({ success: true })
       );
     });
   }
