@@ -82,7 +82,8 @@ router.post('/login', (req, res) => {
   User.findOne({ email }).then(user => {
     // Check for user
     if (!user) {
-      errors.email = 'User not found';
+      errors.email = 'Incorrect user/password combination';
+      errors.password = 'Incorrect user/password combination';
       return res.status(404).json(errors);
     }
 
@@ -110,7 +111,8 @@ router.post('/login', (req, res) => {
             }
           );
         } else {
-          errors.password = 'Password incorrect';
+          errors.email = 'Incorrect user/password combination';
+          errors.password = 'Incorrect user/password combination';
           return res.status(400).json(errors);
         }
       });
