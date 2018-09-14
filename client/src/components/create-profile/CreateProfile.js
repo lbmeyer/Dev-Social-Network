@@ -26,10 +26,32 @@ class CreateProfile extends Component {
     errors: {}
   };
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.errors !== this.props.errors) {
+      this.setState({ errors: this.props.errors });
+    }
+  }
+
   onSubmit = e => {
     e.preventDefault();
 
-    console.log('submit');
+    const profileData = {
+      handle: this.state.handle,
+      company: this.state.company,
+      website: this.state.website,
+      location: this.state.location,
+      status: this.state.status,
+      skills: this.state.skills,
+      githubusername: this.state.githubusername,
+      bio: this.state.bio,
+      twitter: this.state.twitter,
+      facebook: this.state.facebook,
+      linkedin: this.state.linkedin,
+      youtube: this.state.youtube,
+      instagram: this.state.instagram
+    }
+
+    this.props.createProfile(profileData, this.props.history);
   };
 
   onChange = e => {
@@ -41,7 +63,7 @@ class CreateProfile extends Component {
 
     let socialInputs;
 
-    if(displaySocialInputs) {
+    if (displaySocialInputs) {
       socialInputs = (
         <div>
           <InputGroup
@@ -89,7 +111,7 @@ class CreateProfile extends Component {
             error={errors.instagram}
           />
         </div>
-      )
+      );
     }
 
     // Select options for status
@@ -223,4 +245,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps)(CreateProfile);
+export default connect(mapStateToProps, { createProfile })(CreateProfile);
