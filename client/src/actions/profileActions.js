@@ -3,8 +3,10 @@ import {
   GET_PROFILE,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
-  GET_ERRORS
+  GET_ERRORS,
+  SET_CURRENT_USER
 } from './types';
+import { logoutUser } from './authActions';
 
 // Get current profile
 export const getCurrentProfile = () => dispatch => {
@@ -38,6 +40,23 @@ export const createProfile = (profileData, history) => dispatch => {
       })
     );
 };
+
+// Delete account & profile
+export const deleteAccount = () => dispatch => {
+  if(window.confirm('Are you sure? This can NOT be undone!')) {
+    axios
+      .delete('/api/profile')
+      .then(res =>
+        dispatch(logoutUser())
+      ).catch(err => 
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+        )
+
+  }
+}
 
 // Profile loading
 export const setProfileLoading = () => {
