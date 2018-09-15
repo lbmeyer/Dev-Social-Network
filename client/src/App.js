@@ -8,6 +8,8 @@ import { setCurrentUser, logoutUser } from './actions/authActions';
 import { clearCurrentProfile } from './actions/profileActions';
 import PrivateRoute from './components/common/PrivateRoute';
 import CreateProfile from './components/create-profile/CreateProfile';
+import EditProfile from './components/edit-profile/EditProfile';
+import AddExperience from './components/add-credentials/AddExperience';
 
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -51,6 +53,8 @@ class App extends Component {
                 <Route exact path="/login" component={Login} />
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
                 <PrivateRoute exact path="/create-profile" component={CreateProfile} />
+                <PrivateRoute exact path="/edit-profile" component={EditProfile} />
+                <PrivateRoute exact path="/add-experience" component={AddExperience} />
               </Switch>
             </div>
             <Footer />
