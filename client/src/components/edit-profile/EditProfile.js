@@ -33,9 +33,11 @@ class EditProfile extends Component {
 
     if (this.props.profile.profile) {
       const profile = this.props.profile.profile;
-
+      let skillsCSV;
       // Bring skills array back to CSV
-      const skillsCSV = profile.skills.join(',');
+      // TODO fix critical bug -> when token expires and click on Edit Profile
+        skillsCSV = profile.skills.join(',');
+      
 
       // If profile field doesnt exist, make empty string
       const {

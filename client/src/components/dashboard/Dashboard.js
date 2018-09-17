@@ -5,11 +5,13 @@ import { connect } from 'react-redux';
 import { getCurrentProfile, deleteAccount } from '../../actions/profileActions';
 import Spinner from '../common/Spinner';
 import ProfileActions from './ProfileActions';
-import { logoutUser } from '../../actions/authActions';
+import { logoutUser, getUserFromLocalStorage } from '../../actions/authActions';
 
 class Dashboard extends Component {
   componentDidMount() {
     this.props.getCurrentProfile();
+    // this.props.getUserFromLocalStorage();
+    
   }
 
   onDeleteClick = e => {

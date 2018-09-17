@@ -4,6 +4,7 @@ import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
+import { addExperience } from '../../actions/profileActions';
 
 class AddExperience extends Component {
   state = {
@@ -18,8 +19,26 @@ class AddExperience extends Component {
     disabled: false
   };
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.errors !== this.props.errors) {
+      this.setState({ errors: this.props.errors });
+    }
+  }
+
   onSubmit = e => {
     e.preventDefault();
+
+    const expData = {
+      company: this.state.company,
+      title: this.state.title,
+      location: this.state.location,
+      from: this.state.from,
+      to: this.state.to,
+      current: this.state.current,
+      description: this.state.description
+    }
+
+    this.props.addExperience(expData, this.props.history)
   }
 
   onChange = e => {
@@ -130,4 +149,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 })
 
-export default connect(mapStateToProps)(AddExperience);
+export default connect(mapStateToProps, { addExperience })(AddExperience);
