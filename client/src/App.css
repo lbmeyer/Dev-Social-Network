@@ -40,3 +40,7 @@ body {
 .form-control::placeholder {
   color: #bbb !important;
 }
+
+.table {
+  table-layout: fixed;
+}
