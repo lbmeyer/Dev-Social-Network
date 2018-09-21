@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { getCurrentProfile, deleteAccount } from '../../actions/profileActions';
 import Spinner from '../common/Spinner';
 import ProfileActions from './ProfileActions';
-import { logoutUser, getUserFromLocalStorage } from '../../actions/authActions';
 import Experience from './Experience';
 import Education from './Education';
 

@@ -31,7 +31,7 @@ class Education extends Component {
     return (
       <div>
         <h4 className="mb-4">Education Credentials</h4>
-        <table class="table">
+        <table className="table">
           <thead>
             <tr>
               <th>School</th>

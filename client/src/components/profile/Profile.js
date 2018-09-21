@@ -11,9 +11,19 @@ import { getProfileByHandle } from '../../actions/profileActions';
 
 class Profile extends Component {
   componentDidMount() {
-    if (this.props.match.params.handle) {
-      this.props.getProfileByHandle(this.props.match.params.handle);
+    const {handle} = this.props.match.params
+    if (handle) {
+      this.props.getProfileByHandle(handle);
     }
+    console.log('did mount!!')
+  }
+
+  componentDidUpdate() {
+    this.props.profile.profile === null
+      // set loading to false
+      && !this.props.profile.loading
+      // redirect to not-found page
+      && this.props.history.push('/not-found')
   }
 
   render() {
@@ -39,7 +49,8 @@ class Profile extends Component {
             education={profile.education}
             experience={profile.experience}
           />
-          <ProfileGithub />
+          {profile.githubusername ? (<ProfileGithub username={profile.githubusername}/>) : null }
+        
         </div>
       );
     }

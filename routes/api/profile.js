@@ -14,6 +14,8 @@ const Profile = require('../../models/Profile');
 // Load User Model
 const User = require('../../models/User');
 
+// TODO: Better practice to call Github in backend: https://github.com/robertg042/devHangOuts/blob/master/routes/api/profile.js
+
 // @route   GET api/profile/test
 // @desc    Tests profile route
 // @access  Public
