@@ -7,11 +7,7 @@ import jwt_decode from 'jwt-decode';
 import { setCurrentUser, logoutUser } from './actions/authActions';
 import { clearCurrentProfile } from './actions/profileActions';
 import PrivateRoute from './components/common/PrivateRoute';
-import CreateProfile from './components/create-profile/CreateProfile';
-import EditProfile from './components/edit-profile/EditProfile';
-import AddExperience from './components/add-credentials/AddExperience';
-import AddEducation from './components/add-credentials/AddEducation'
-import NotFound from './components/not-found/NotFound';
+import './App.css';
 
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -21,7 +17,12 @@ import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
-import './App.css';
+import CreateProfile from './components/create-profile/CreateProfile';
+import EditProfile from './components/edit-profile/EditProfile';
+import AddExperience from './components/add-credentials/AddExperience';
+import AddEducation from './components/add-credentials/AddEducation'
+import NotFound from './components/not-found/NotFound';
+import Posts from './components/posts/Posts';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -62,6 +63,7 @@ class App extends Component {
                 <PrivateRoute exact path="/edit-profile" component={EditProfile} />
                 <PrivateRoute exact path="/add-experience" component={AddExperience} />
                 <PrivateRoute exact path="/add-education" component={AddEducation} />
+                <PrivateRoute exact path="/feed" component={Posts} />
                 <Route component={NotFound} />
               </Switch>
             </div>

@@ -53,10 +53,10 @@ router.post(
     }
 
     const newPost = new Post({
+      user: req.user.id,
       text: req.body.text,
       name: req.body.name,
-      avatar: req.body.avatar,
-      user: req.user.id
+      avatar: req.body.avatar
     });
 
     newPost.save().then(post => res.json(post));
