@@ -1,7 +1,15 @@
 import axios from 'axios';
-import { ADD_POST, GET_ERRORS } from './types';
+import {
+  ADD_POST,
+  GET_ERRORS,
+  GET_POST,
+  POST_LOADING,
+  GET_POSTS,
+  DELETE_POST,
+  TOGGLE_LIKE
+} from './types';
 
-// Add post
+// Add Post
 export const addPost = postData => dispatch => {
   axios
     .post('/api/posts', postData)
@@ -17,4 +25,67 @@ export const addPost = postData => dispatch => {
         payload: err.response.data
       })
     );
+};
+
+// Get Posts
+export const getPosts = () => dispatch => {
+  dispatch(setPostLoading());
+  axios
+    .get('/api/posts')
+    .then(res =>
+      dispatch({
+        type: GET_POSTS,
+        payload: res.data
+      })
+    )
+    .catch(
+      err => console.log(err),
+      dispatch({
+        type: GET_POSTS,
+        payload: null
+      })
+    );
+};
+
+// Delete Post
+export const deletePost = id => dispatch => {
+  axios
+    .delete(`/api/posts/${id}`)
+    .then(res =>
+      dispatch({
+        type: DELETE_POST,
+        payload: id
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Toggle Like
+export const toggleLike = id => dispatch => {
+  axios
+    .post(`/api/posts/like/${id}`)
+    .then(res =>
+      dispatch({
+        type: TOGGLE_LIKE,
+        payload: res.data // pass in updated post
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Set loading state
+export const setPostLoading = () => {
+  return {
+    type: POST_LOADING
+  };
 };

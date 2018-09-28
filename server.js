@@ -15,12 +15,9 @@ app.use(bodyParser.json());
 
 require('dotenv').config();
 
-// DB config
-// const db1 = require('./config/keys').mongoURI;
-
 // from dotenv package that makes use of environment variables
-const db = process.env.mongoURI;
-const key1 = process.env.secretOrKey;
+const db = process.env.MONGO_URI;
+const key1 = process.env.SECRET_OR_KEY;
 mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => console.log(`MongoDB Connected`))
