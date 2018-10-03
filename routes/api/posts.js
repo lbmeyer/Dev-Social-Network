@@ -52,6 +52,8 @@ router.post(
       return res.status(400).json(errors);
     }
 
+    // use req.user.name and req.user.avatar 
+    // instead of req.body.{item} to improve security
     const newPost = new Post({
       user: req.user.id,
       text: req.body.text,
@@ -148,10 +150,11 @@ router.post(
 
     Post.findById(req.params.id)
       .then(post => {
+        // use req.user.name and req.user.avatar instead of req.body.{item}
         const newComment = {
           text: req.body.text,
-          name: req.body.name,
-          avatar: req.body.avatar,
+          name: req.user.name,
+          avatar: req.user.avatar,
           user: req.user.id
         };
 
@@ -174,55 +177,26 @@ router.delete(
   (req, res) => {
     Post.findById(req.params.id)
       .then(post => {
-        // Check if comment exists with find
-        const commentToDelete = post.comments.find(
-          comment => comment._id.toString() === req.params.comment_id
-        );
-
-        if (!commentToDelete) {
+        // Check to see if comment exists
+        if (
+          post.comments.filter(
+            comment => comment._id.toString() === req.params.comment_id
+          ).length === 0
+        ) {
           return res
             .status(404)
-            .json({ commentnotexist: 'Comment does not exist' });
+            .json({ commentnotexists: 'Comment does not exist' });
         }
 
-        // Only allow post owner or comment owner to delete comment
-        if (post.user.toString() !== req.user.id) {
-          // User is not owner, now check if user is comment owner
-          if (commentToDelete.user.toString() !== req.user.id) {
-            return res
-              .status(401)
-              .json({
-                cannotdeletecomment: 'Not authorized to delete this comment'
-              });
-          }
-        }
+        // Get remove index
+        const removeIndex = post.comments
+          .map(item => item._id.toString())
+          .indexOf(req.params.comment_id);
 
-        // Delete comment from Post with $pull operator
-        post
-          .update({ $pull: { comments: { _id: req.params.comment_id } } })
-          .then(post => res.json(post))
-          .catch(err => res.status(400).json(err));
+        // Splice comment out of array
+        post.comments.splice(removeIndex, 1);
 
-        // // Check if comment exists
-        // if (
-        //   post.comments.filter(
-        //     comment => comment._id.toString() === req.params.comment_id
-        //   ).length === 0
-        // ) {
-        //   return res
-        //     .status(404)
-        //     .json({ commentnotexists: 'Comment does not exist ' });
-        // }
-
-        // // Get remove index
-        // const removeIndex = post.comments
-        //   .map(item => item._id.toString())
-        //   .indexOf(req.params.comment_id);
-
-        // // Splice comment out of array
-        // post.comments.splice(removeIndex, 1);
-
-        // post.save().then(post => res.json(post));
+        post.save().then(post => res.json(post));
       })
       .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
   }
